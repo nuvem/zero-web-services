@@ -38,7 +38,7 @@
 
 							<wsdlOptions>
 								<wsdlOption>
-									<wsdl>${basedir}/src/main/resources/SimpleService.wsdl</wsdl>
+									<wsdl>${basedir}/src/main/resources/SimpleServiceWrapped.wsdl</wsdl>
 									<extraargs>
 										<extraarg>-client</extraarg>
 									</extraargs>

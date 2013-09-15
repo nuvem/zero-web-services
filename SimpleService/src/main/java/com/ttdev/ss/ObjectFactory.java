@@ -1,10 +1,7 @@
 
 package com.ttdev.ss;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -24,7 +21,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ConcatResponse_QNAME = new QName("http://ttdev.com/ss", "concatResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ttdev.ss
@@ -34,20 +30,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ConcatRequest }
+     * Create an instance of {@link ConcatResponse }
      * 
      */
-    public ConcatRequest createConcatRequest() {
-        return new ConcatRequest();
+    public ConcatResponse createConcatResponse() {
+        return new ConcatResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * Create an instance of {@link Concat }
      * 
      */
-    @XmlElementDecl(namespace = "http://ttdev.com/ss", name = "concatResponse")
-    public JAXBElement<String> createConcatResponse(String value) {
-        return new JAXBElement<String>(_ConcatResponse_QNAME, String.class, null, value);
+    public Concat createConcat() {
+        return new Concat();
     }
 
 }

@@ -4,12 +4,15 @@
 	name="SimpleService" targetNamespace="http://ttdev.com/ss"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 
-	<!-- Bared style (one parameter to request and response) -->
+	<!-- In SimpleService.wsdl the request and response calls are bind to single objects
+		Here we split those single params in multiple params for ease of use in code -->
+	<!--  wrapped style -->
 	<wsdl:types>
 		<xsd:schema targetNamespace="http://ttdev.com/ss"
 			xmlns:tns="http://ttdev.com/ss">
 
-			<xsd:element name="concatRequest">
+			<!-- in original concat = concatRequest -->
+			<xsd:element name="concat">
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="s1" type="xsd:string"></xsd:element>
@@ -17,14 +20,22 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="concatResponse" type="xsd:string"></xsd:element>
+			<!-- Even though concatResponse has only a parameter this should be put as child element
+			in a complexType to get the wrapped style -->
+			<xsd:element name="concatResponse">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="r" type="xsd:string"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			</xsd:element>
 		</xsd:schema>
 	</wsdl:types>
 
 
 
 	<wsdl:message name="concatRequest">
-		<wsdl:part name="concatRequest" element="tns:concatRequest"></wsdl:part>
+		<wsdl:part name="concatRequest" element="tns:concat"></wsdl:part>
 	</wsdl:message>
 
 	<wsdl:message name="concatResponse">

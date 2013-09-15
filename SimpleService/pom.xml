@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-
+	
 
 	<build>
 		<plugins>
@@ -40,7 +40,7 @@
 							
 <!-- 							<wsdlOptions> -->
 <!-- 								<wsdlOption> -->
-<!-- 									<wsdl>${basedir}/src/main/resources/SimpleService.wsdl</wsdl> -->
+<!-- 									<wsdl>${basedir}/src/main/resources/SimpleServiceWrapped.wsdl</wsdl> -->
 <!-- 									<extraargs> -->
 <!-- 										<extraarg>-server</extraarg> -->
 <!-- 									</extraargs> -->

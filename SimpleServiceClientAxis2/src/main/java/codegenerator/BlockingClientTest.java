@@ -8,7 +8,7 @@ import com.ttdev.ss.SimpleServiceStub.ConcatResponse;
 
 public class BlockingClientTest {
 	public static void main(String[] args) {
-		String endpoing = "http://localhost:8080/axis2/services/SimpleService/";
+		String endpoing = "http://localhost:1234/axis2/services/SimpleService/";
 		
 		try {
 			SimpleServiceStub serviceStub = new SimpleServiceStub(null, endpoing);
