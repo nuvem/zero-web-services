@@ -1,16 +1,17 @@
 package training.webservices.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.foo.bizservicetwo.BizServiceTwo;
-import com.foo.bizservicetwo.ProductQueryComplexType;
-import com.foo.bizservicetwo.QueryResponseComplexType;
-import com.foo.bizservicetwo.ProductQueryComplexType.QueryItem;
-import com.foo.bizservicetwo.QueryResponseComplexType.ProductQueryResult;
+import com.foo.bizservice.BizService;
+import com.foo.bizservice.ProductQueryComplexType;
+import com.foo.bizservice.ProductQueryComplexType.QueryItem;
+import com.foo.bizservice.QueryResponseComplexType;
+import com.foo.bizservice.QueryResponseComplexType.ProductQueryResult;
 
-public class BizServiceTwoImpl implements BizServiceTwo {
+public class BizServiceImpl implements BizService {
 
-	private static List<ProductItem> items = null;
+	private static List<ProductItem> items = new ArrayList<>();
 	static {
 		makeModelTest();
 	}
@@ -25,6 +26,8 @@ public class BizServiceTwoImpl implements BizServiceTwo {
 					ProductQueryResult productQueryResult = new ProductQueryResult();
 					productQueryResult.setProductId(productItem.getProductId());
 					productQueryResult.setPrice(productItem.getPrice());
+					queryResponse.getProductQueryResult().add(
+							productQueryResult);
 				}
 			}
 
@@ -37,7 +40,7 @@ public class BizServiceTwoImpl implements BizServiceTwo {
 		ProductItem item2 = new ProductItem("0002", 150, 32);
 		ProductItem item3 = new ProductItem("0003", 99, 320);
 		ProductItem item4 = new ProductItem("0004", 300, 15);
-		ProductItem item5 = new ProductItem("0005", 254, 25);
+		ProductItem item5 = new ProductItem("0005", 254, 69);
 		items.add(item1);
 		items.add(item2);
 		items.add(item3);

@@ -1,5 +1,5 @@
 
-package com.foo.bizservicetwo;
+package com.foo.bizservice;
 
 import java.util.ArrayList;
 import java.util.List;
