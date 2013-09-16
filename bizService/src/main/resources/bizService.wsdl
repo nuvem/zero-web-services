@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:tns="http://foo.com"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="bizService" targetNamespace="http://foo.com"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+
+	<!-- types -->
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://foo.com">
+			<xsd:element name="productQuery">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="querytItem" minOccurs="1"
+							maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:attribute name="productId" type="xsd:string"></xsd:attribute>
+								<xsd:attribute name="qty" type="xsd:int"></xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="productQueryResult">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultItem" minOccurs="1" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:attribute name="productId" type="xsd:string"></xsd:attribute>
+								<xsd:attribute name="price" type="xsd:int"></xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>		</xsd:schema>
+	</wsdl:types>
+
+	<!-- messages -->
+	<wsdl:message name="productQueryRequest">
+		<wsdl:part name="productsToQuery" element="tns:productQuery"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="productQueryResponse">
+		<wsdl:part name="queryResults" element="tns:productQueryResult"></wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:portType name="bizService">
+		<wsdl:operation name="productAvailability">
+			<wsdl:input name="productAvailabilityRequest" message="tns:productQueryRequest"></wsdl:input>
+			<wsdl:output name="productAvaliabilityResponse" message="tns:productQueryResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="bizServiceSOAPBinding" type="tns:bizService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="productAvailability">
+			<soap:operation soapAction="http://foo.com/bizService/productAvailability" />
+			<wsdl:input name="productAvailabilityRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="productAvaliabilityResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="bizServicePorts">
+		<wsdl:port name="bizServicePortSOAPBinding" binding="tns:bizServiceSOAPBinding">
+			<soap:address location="http://localhost:8080/bizService/port1" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
