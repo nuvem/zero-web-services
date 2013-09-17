@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.foo.bizservice.BizService;
 import com.foo.bizservice.ProductQueryComplexType;
+import com.foo.bizservice.QueryInvalidProductId;
+import com.foo.bizservice.QueryInvalidQty;
 import com.foo.bizservice.ProductQueryComplexType.QueryItem;
 import com.foo.bizservice.QueryResponseComplexType;
 import com.foo.bizservice.QueryResponseComplexType.ProductQueryResult;
@@ -16,16 +18,51 @@ public class BizServiceImpl implements BizService {
 		makeModelTest();
 	}
 
+	// @Override
+	// public QueryResponseComplexType query(ProductQueryComplexType parameters)
+	// {
+	// QueryResponseComplexType queryResponse = new QueryResponseComplexType();
+	// for (QueryItem queryItem : parameters.getQueryItem()) {
+	// for (ProductItem productItem : items) {
+	// if (queryItem.getProductId().equals(productItem.getProductId())
+	// && (queryItem.getQty() <= productItem.getQty())) {
+	// ProductQueryResult productQueryResult = new ProductQueryResult();
+	// productQueryResult.setProductId(productItem.getProductId());
+	// productQueryResult.setPrice(productItem.getPrice());
+	// queryResponse.getProductQueryResult().add(
+	// productQueryResult);
+	// }
+	// }
+	//
+	// }
+	// return queryResponse;
+	// }
+
 	@Override
-	public QueryResponseComplexType query(ProductQueryComplexType parameters) {
+	public QueryResponseComplexType query(ProductQueryComplexType parameters)
+			throws QueryInvalidProductId, QueryInvalidQty {
 		QueryResponseComplexType queryResponse = new QueryResponseComplexType();
 		for (QueryItem queryItem : parameters.getQueryItem()) {
+
+			// Test faults on service
+			if (queryItem.getProductId().length() > 4) {
+				throw new QueryInvalidProductId("Invalid product Id",
+						queryItem.getProductId());
+			}
+
+			if (queryItem.getQty() <= 0) {
+				throw new QueryInvalidQty("Invalid qty.", queryItem.getQty());
+			}
+
 			for (ProductItem productItem : items) {
+
 				if (queryItem.getProductId().equals(productItem.getProductId())
 						&& (queryItem.getQty() <= productItem.getQty())) {
+
 					ProductQueryResult productQueryResult = new ProductQueryResult();
 					productQueryResult.setProductId(productItem.getProductId());
 					productQueryResult.setPrice(productItem.getPrice());
+
 					queryResponse.getProductQueryResult().add(
 							productQueryResult);
 				}
@@ -33,6 +70,7 @@ public class BizServiceImpl implements BizService {
 
 		}
 		return queryResponse;
+
 	}
 
 	private static void makeModelTest() {

@@ -72,11 +72,13 @@ public final class BizService_BizServiceSOAP_Client_End {
 
 			QueryItem queryItem1 = new QueryItem();
 			queryItem1.setProductId("0001");
+//			queryItem1.setProductId("0000ww0w");
 			queryItem1.setQty(10);
 
 			QueryItem queryItem2 = new QueryItem();
 			queryItem2.setProductId("0005");
 			queryItem2.setQty(150);
+//			queryItem2.setQty(0);
 
 			// this shouln't be queried
 			QueryItem queryItem3 = new QueryItem();

@@ -5,8 +5,11 @@
 	targetNamespace="http://www.foo.com/bizService/">
 	<wsdl:types>
 		<xsd:schema targetNamespace="http://www.foo.com/bizService/">
-			<xsd:element name="productQuery" type="tns:productQueryComplexType"/>
-			<xsd:element name="queryResponse" type="tns:queryResponseComplexType"/>
+			<xsd:element name="productQuery" type="tns:productQueryComplexType" />
+			<xsd:element name="queryResponse" type="tns:queryResponseComplexType" />
+			<!-- fault elements -->
+			<xsd:element name="invalidProductId" type="xsd:string"></xsd:element>
+			<xsd:element name="invalidQty" type="xsd:int"></xsd:element>
 
 			<xsd:complexType name="productQueryComplexType">
 				<xsd:sequence>
@@ -25,7 +28,8 @@
 
 			<xsd:complexType name="queryResponseComplexType">
 				<xsd:sequence>
-					<xsd:element name="productQueryResult" minOccurs="1" maxOccurs="unbounded">
+					<xsd:element name="productQueryResult" minOccurs="1"
+						maxOccurs="unbounded">
 						<xsd:complexType>
 							<xsd:attribute name="productId" type="xsd:string">
 							</xsd:attribute>
@@ -36,6 +40,16 @@
 				</xsd:sequence>
 			</xsd:complexType>
 
+			<xsd:element name="queryFault">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="queryFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
 		</xsd:schema>
 	</wsdl:types>
 	<wsdl:message name="queryRequest">
@@ -44,14 +58,27 @@
 	<wsdl:message name="queryResponse">
 		<wsdl:part element="tns:queryResponse" name="parameters" />
 	</wsdl:message>
-	
+	<!-- fault messages -->
+	<wsdl:message name="queryInvalidProductId">
+		<wsdl:part name="parameters" element="tns:invalidProductId"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="queryInvalidQty">
+		<wsdl:part name="parametres" element="tns:invalidQty"></wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:message name="queryFault">
+		<wsdl:part name="parameters" element="tns:queryFault"></wsdl:part>
+	</wsdl:message>
 	<wsdl:portType name="bizService">
 		<wsdl:operation name="query">
 			<wsdl:input message="tns:queryRequest" />
 			<wsdl:output message="tns:queryResponse" />
-		</wsdl:operation>
+			<wsdl:fault name="f01" message="tns:queryInvalidProductId"></wsdl:fault>
+			<wsdl:fault name="f02" message="tns:queryInvalidQty"></wsdl:fault>
+        </wsdl:operation>
 	</wsdl:portType>
-	
+
 	<wsdl:binding name="bizServiceSOAP" type="tns:bizService">
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
@@ -63,6 +90,12 @@
 			<wsdl:output>
 				<soap:body use="literal" />
 			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault name="f01" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault name=""/>
+			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="bizService">
