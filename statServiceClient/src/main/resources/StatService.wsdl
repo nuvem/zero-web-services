@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://ttdev.com/StatService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="StatService" targetNamespace="http://ttdev.com/StatService/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://ttdev.com/StatService/">
+			<xsd:element name="getStatistics" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="getStatisticsResponse" type="xsd:string">
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getStatisticsRequest">
+		<wsdl:part element="tns:getStatistics" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="getStatisticsResponse">
+		<wsdl:part element="tns:getStatisticsResponse" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:portType name="StatService">
+		<wsdl:operation name="getStatistics">
+			<wsdl:input message="tns:getStatisticsRequest" />
+			<wsdl:output message="tns:getStatisticsResponse" />
+			<jaxws:bindings>
+				<jaxws:enableAsyncMapping>true</jaxws:enableAsyncMapping>
+			</jaxws:bindings>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="StatServiceSOAP" type="tns:StatService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getStatistics">
+			<soap:operation soapAction="http://ttdev.com/StatService/getStatistics" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="StatServicePorts">
+		<wsdl:port binding="tns:StatServiceSOAP" name="StatServiceSOAPPort1">
+			<soap:address location="http://localhost:8080/statService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
