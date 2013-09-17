@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="http://ttdev.com/StatService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="StatService"
-	targetNamespace="http://ttdev.com/StatService/">
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="StatService" targetNamespace="http://ttdev.com/StatService/">
 	<wsdl:types>
 		<xsd:schema targetNamespace="http://ttdev.com/StatService/">
 			<xsd:element name="getStatistics" type="xsd:string">
@@ -18,14 +18,17 @@
 	<wsdl:message name="getStatisticsResponse">
 		<wsdl:part element="tns:getStatisticsResponse" name="parameters" />
 	</wsdl:message>
-	
+
 	<wsdl:portType name="StatService">
 		<wsdl:operation name="getStatistics">
 			<wsdl:input message="tns:getStatisticsRequest" />
 			<wsdl:output message="tns:getStatisticsResponse" />
+			<jaxws:bindings>
+				<jaxws:enableAsyncMapping>true</jaxws:enableAsyncMapping>
+			</jaxws:bindings>
 		</wsdl:operation>
 	</wsdl:portType>
-	
+
 	<wsdl:binding name="StatServiceSOAP" type="tns:StatService">
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />

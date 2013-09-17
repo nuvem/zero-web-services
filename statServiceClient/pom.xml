@@ -38,7 +38,7 @@
 
 							<wsdlOptions>
 								<wsdlOption>
-									<wsdl>${basedir}/src/main/resources/starService.wsdl</wsdl>
+									<wsdl>${basedir}/src/main/resources/StatService.wsdl</wsdl>
 									<extraargs>
 										<extraarg>-client</extraarg>
 									</extraargs>
