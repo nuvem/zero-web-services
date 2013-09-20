@@ -6,7 +6,13 @@
 
 	<wsdl:types>
 		<xsd:schema targetNamespace="http://www.trainig.com/StatProducer/">
-			<xsd:element name="getStatistics" type="xsd:string">
+			<xsd:element name="getStatistics">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="param" type="xsd:string"></xsd:element>
+						<xsd:element name="replyto" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
 			</xsd:element>
 		</xsd:schema>
 	</wsdl:types>

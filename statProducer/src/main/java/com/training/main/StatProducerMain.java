@@ -7,22 +7,24 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Endpoint;
 
+import com.trainig.statproducer.GetStatistics;
 import com.trainig.statproducer.impl.StatProducerImpl;
 import com.training.statconsumer.StatConsumer;
 import com.training.statconsumer.StatConsumerPorts;
 
 public class StatProducerMain {
 
-	private BlockingQueue<String> requestQueue;
+	private BlockingQueue<GetStatistics> requestQueue;
 
 	public static void main(String[] args) {
 		new StatProducerMain().run();
 	}
 
 	public StatProducerMain() {
-		this.requestQueue = new LinkedBlockingDeque<String>();
+		this.requestQueue = new LinkedBlockingDeque<GetStatistics>();
 	}
 
 	private void run() {
@@ -39,8 +41,8 @@ public class StatProducerMain {
 		while (true) {
 
 			try {
-				String req = requestQueue.take();
-				System.out.println("Got a request: " + req);
+				GetStatistics req = requestQueue.take();
+				System.out.println("Got a request: " + req.getParam());
 				System.out.println("Enter response: ");
 				String result = br.readLine();
 
@@ -48,8 +50,14 @@ public class StatProducerMain {
 						StatConsumerPorts.WSDL_LOCATION, new QName(
 								"http://www.training.com/StatConsumer/",
 								"StatConsumerPorts"));
-				StatConsumer statConsumerClient = ports.getStatConsumerSOAPPort1();
-				statConsumerClient.putStatistics(result);
+
+				StatConsumer port1 = ports.getStatConsumerSOAPPort1();
+				BindingProvider bindingProvider = (BindingProvider) port1;
+				bindingProvider.getRequestContext().put(
+						BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
+						req.getReplyto());
+
+				port1.putStatistics(result);
 
 			} catch (InterruptedException | IOException e) {
 				e.printStackTrace();
