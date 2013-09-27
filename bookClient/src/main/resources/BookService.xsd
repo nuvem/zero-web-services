@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ttdev/BookService"
+	xmlns:tns="http://ttdev/BookService" elementFormDefault="qualified">
+
+    <element name="book">
+	    <complexType >
+    		<sequence>
+    			<element name="isbn" type="string"></element>
+    			<element name="title" type="string"></element>
+    		</sequence>
+    	</complexType>
+    </element>
+</schema>
