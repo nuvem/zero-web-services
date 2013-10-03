@@ -6,7 +6,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import ttdev.bookservice.Book;
+import org.juanfezero.learning.domain.Book;
 
 @Path("books/{isbn}")
 public class BookResource {
